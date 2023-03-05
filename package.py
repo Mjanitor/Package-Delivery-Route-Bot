@@ -11,3 +11,5 @@ class Package:
     def __str__(self):
         return f"This package has an ID of {self.id} and is currently {self.status}.  It is being delivered to {self.address}, {self.city} {self.zip}.  It weighs {self.weight} Kilos " \
                f"and must be delivered by {self.deadline}."
+    def check_location(self):
+        print(f"Package {self.id} is currently {self.status}")
