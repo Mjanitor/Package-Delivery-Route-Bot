@@ -5,19 +5,35 @@ import csv
 
 def main():
     # Demo Truck
-    truck1 = Truck("Truck 1", 2)
-    print(truck1)
+    truck1 = Truck("Truck 1")
 
     # Demo Package
     package1 = Package(1, "195 W Oakland Ave", 1030, "Salt Lake City", 84115, 21, "at the Hub")
-    print(package1)
-    package1.check_location()
 
     # Demo Hashmap
     hashmap1 = HashMap()
-    hashmap1.print()
 
-    #TODO: Open CSV Files
+    # Importing Package CSV data
+    with open("Resources/WGUPS Package File.csv", encoding='utf-8-sig') as csvfile:
+        packageCSV = csv.reader(csvfile)
+        packageList = list(packageCSV)
+        print(packageList)
+
+    print("----------------------------------------------------------------------------")
+
+    # Importing Distance CSV data
+    with open("Resources/WGUPS Distance Table.csv", encoding='utf-8-sig') as csvfile:
+        distanceCSV = csv.reader(csvfile)
+        distanceList = list(distanceCSV)
+        print(distanceList)
+
+    print("----------------------------------------------------------------------------")
+
+    # Importing Address CSV data
+    with open("Resources/Address Indices.csv", encoding='utf-8-sig') as csvfile:
+        addressCSV = csv.reader(csvfile)
+        addressList = list(addressCSV)
+        print(addressList)
 
     #TODO: Load Package attributes from CSV files
 
