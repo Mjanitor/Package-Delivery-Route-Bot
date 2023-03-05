@@ -1,16 +1,9 @@
 from truck import *
 from package import *
 from hashmap import *
+import csv
 
 def main():
-    print("Hello World!")
-    print("Doggies are fun")
-    print("Cats are too")
-    print("Betelgeuse")
-
-    for x in range(5):
-        print(x)
-
     # Demo Truck
     truck1 = Truck("Truck 1", 2)
     print(truck1)
@@ -23,6 +16,12 @@ def main():
     # Demo Hashmap
     hashmap1 = HashMap()
     hashmap1.print()
+
+    #TODO: Open CSV Files
+
+    #TODO: Load Package attributes from CSV files
+
+    #TODO: Create Method to determine the distance between two addresses
 
 if __name__ == "__main__":
     main()
