@@ -1,5 +1,6 @@
 from truck import *
 from package import *
+from hashmap import *
 
 def main():
     print("Hello World!")
@@ -17,6 +18,10 @@ def main():
     # Demo Package
     package1 = Package(1, "195 W Oakland Ave", "Salt Lake City", "UT", 84115, 1030, 21)
     print(package1)
+
+    # Demo Hashmap
+    hashmap1 = HashMap()
+    hashmap1.print()
 
 if __name__ == "__main__":
     main()
