@@ -8,7 +8,7 @@ def main():
     truck1 = Truck("Truck 1")
 
     # Demo Package
-    package1 = Package(1, "195 W Oakland Ave", 1030, "Salt Lake City", 84115, 21, "at the Hub")
+    package1 = Package(1, "195 W Oakland Ave", 1030, "Salt Lake City", "UT", 84115, 21, "at the Hub")
 
     # Demo Hashmap
     hashmap1 = HashMap()
@@ -35,9 +35,29 @@ def main():
         addressList = list(addressCSV)
         print(addressList)
 
-    #TODO: Load Package attributes from CSV files
+    # Reading CSV files to create packages with data, then adding them to the Hash Map
+    def load_packages(file_name, hash_table):
+        for package in file_name:
+            ID = package[0]
+            address = package[1]
+            city = package[2]
+            state = package[3]
+            zip = package[4]
+            deadline = package[5]
+            weight = package[6]
+            status = "at the Hub"
 
-    #TODO: Create Method to determine the distance between two addresses
+            # Creating a new package object
+            package = Package(ID, address, city, state, zip, deadline, weight, status)
+
+            # Adding ethe new package
+            hash_table.add(ID, package)
+
+    load_packages(packageList, hashmap1)
+    hashmap1.print()
+
+
+    # TODO: Create Method to determine the distance between two addresses
 
 if __name__ == "__main__":
     main()
