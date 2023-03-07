@@ -72,10 +72,23 @@ def main():
     truck3 = Truck("Truck 3", 16, 18, [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 0.0, "4001 South 700 East")
 
     load_packages(packageList, hashMap)
-    hashMap.print()
-    cur_package = hashMap.get("1").address
-    print(cur_package)
-    print(truck1.address)
+
+    # Main package delivery
+    def package_delivery(truck):
+        for package in truck.packages:
+            package_address = hashMap.get(str(package)).address
+            distance = find_distance(get_address_index(truck.address), get_address_index(package_address))
+            truck.mileage += float(distance)
+            truck.address = package_address
+            truck.packages.pop(0)
+
+        return truck.mileage
+
+    firstTrip = package_delivery(truck1)
+    secondTrip = package_delivery(truck2)
+    thirdTrip = package_delivery(truck3)
+
+    print(f"Total Miles: {firstTrip + secondTrip + thirdTrip}")
 
 if __name__ == "__main__":
     main()
