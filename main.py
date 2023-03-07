@@ -75,6 +75,12 @@ def main():
 
     # Main package delivery
     def package_delivery(truck):
+        # Nearest Neighbor Algorithm
+        undelivered = []
+
+        for package in truck.packages:
+            undelivered.append(package)
+
         for package in truck.packages:
             package_address = hashMap.get(str(package)).address
             distance = find_distance(get_address_index(truck.address), get_address_index(package_address))
