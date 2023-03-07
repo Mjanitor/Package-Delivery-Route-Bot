@@ -9,23 +9,16 @@ def main():
     with open("Resources/WGUPS Package File.csv", encoding='utf-8-sig') as csvfile:
         packageCSV = csv.reader(csvfile)
         packageList = list(packageCSV)
-        print(packageList)
-
-    print("----------------------------------------------------------------------------")
 
     # Importing Distance CSV data
     with open("Resources/WGUPS Distance Table.csv", encoding='utf-8-sig') as csvfile:
         distanceCSV = csv.reader(csvfile)
         distanceList = list(distanceCSV)
-        print(distanceList)
-
-    print("----------------------------------------------------------------------------")
 
     # Importing Address CSV data
     with open("Resources/Address Indices.csv", encoding='utf-8-sig') as csvfile:
         addressCSV = csv.reader(csvfile)
         addressList = list(addressCSV)
-        print(addressList)
 
     # Reading CSV files to create packages with data, then adding them to the Hash Map
     def load_packages(file_name, hash_table):
@@ -61,8 +54,6 @@ def main():
 
         return distance
 
-    print(find_distance(get_address_index("4001 South 700 East"), get_address_index("3575 W Valley Central Station bus Loop")))
-
     # Creating hash map
     hashMap = HashMap()
 
@@ -77,18 +68,28 @@ def main():
     def package_delivery(truck):
         # Nearest Neighbor Algorithm
         undelivered = []
+        distance = 0
 
         for package in truck.packages:
             undelivered.append(package)
 
-        for package in truck.packages:
+        # Initial delivery
+        distance = find_distance(get_address_index(truck.address), get_address_index(hashMap.get(str(truck.packages[0])).address))
+        truck.mileage += float(distance)
+        undelivered.pop(0)
+        print(f"Truck Package Numbers: {undelivered}")
+
+        for package in undelivered:
+            print(package)
             package_address = hashMap.get(str(package)).address
             distance = find_distance(get_address_index(truck.address), get_address_index(package_address))
             truck.mileage += float(distance)
             truck.address = package_address
-            truck.packages.pop(0)
+            undelivered.pop(0)
+        # Accounting for the return home
+        truck.mileage += float(find_distance(get_address_index(truck.address), get_address_index("4001 South 700 East")))
 
-        return truck.mileage
+        return round(truck.mileage, 2)
 
     firstTrip = package_delivery(truck1)
     secondTrip = package_delivery(truck2)
