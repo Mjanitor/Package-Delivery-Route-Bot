@@ -4,11 +4,6 @@ from hashmap import *
 import csv
 
 def main():
-    # Demo Truck
-    truck1 = Truck("Truck 1", 16, 18, [1, 2, 3, 4, 5], 0.0, "4001 South 700 East")
-
-    # Demo Hashmap
-    hashmap1 = HashMap()
 
     # Importing Package CSV data
     with open("Resources/WGUPS Package File.csv", encoding='utf-8-sig') as csvfile:
@@ -50,12 +45,6 @@ def main():
             # Adding ethe new package
             hash_table.add(ID, package)
 
-    load_packages(packageList, hashmap1)
-    hashmap1.print()
-    cur_package = hashmap1.get("1").address
-    print(cur_package)
-    print(truck1.address)
-
     # Turning addresses into indices for distance calculation
     def get_address_index(address):
         for entry in addressList:
@@ -73,6 +62,20 @@ def main():
         return distance
 
     print(find_distance(get_address_index("4001 South 700 East"), get_address_index("3575 W Valley Central Station bus Loop")))
+
+    # Creating hash map
+    hashMap = HashMap()
+
+    # Creating Truck Objects
+    truck1 = Truck("Truck 1", 16, 18, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East")
+    truck2 = Truck("Truck 2", 16, 18, [3, 12, 17, 18, 19, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 0.0, "4001 South 700 East")
+    truck3 = Truck("Truck 3", 16, 18, [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 0.0, "4001 South 700 East")
+
+    load_packages(packageList, hashMap)
+    hashMap.print()
+    cur_package = hashMap.get("1").address
+    print(cur_package)
+    print(truck1.address)
 
 if __name__ == "__main__":
     main()
