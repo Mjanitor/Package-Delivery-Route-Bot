@@ -56,18 +56,23 @@ def main():
     print(cur_package)
     print(truck1.address)
 
-
+    # Turning addresses into indices for distance calculation
+    def get_address_index(address):
+        for entry in addressList:
+            if entry[2] == address:
+                return int(entry[0])
 
     # Create Method to determine the distance between two addresses
     def find_distance(x, y):
         distance = distanceList[x][y]
 
+        # Flips the lookup index in case of empty distance value
         if distance == '':
             distance = distanceList[y][x]
 
         return distance
 
-    print(find_distance(0, 14))
+    print(find_distance(get_address_index("4001 South 700 East"), get_address_index("3575 W Valley Central Station bus Loop")))
 
 if __name__ == "__main__":
     main()
