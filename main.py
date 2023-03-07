@@ -52,9 +52,22 @@ def main():
 
     load_packages(packageList, hashmap1)
     hashmap1.print()
+    cur_package = hashmap1.get("1").address
+    print(cur_package)
+    print(truck1.address)
 
 
-    # TODO: Create Method to determine the distance between two addresses
+
+    # Create Method to determine the distance between two addresses
+    def find_distance(x, y):
+        distance = distanceList[x][y]
+
+        if distance == '':
+            distance = distanceList[y][x]
+
+        return distance
+
+    print(find_distance(0, 14))
 
 if __name__ == "__main__":
     main()
