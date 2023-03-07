@@ -5,10 +5,7 @@ import csv
 
 def main():
     # Demo Truck
-    truck1 = Truck("Truck 1")
-
-    # Demo Package
-    package1 = Package(1, "195 W Oakland Ave", 1030, "Salt Lake City", "UT", 84115, 21, "at the Hub")
+    truck1 = Truck("Truck 1", 16, 18, [1, 2, 3, 4, 5], 0.0, "4001 South 700 East")
 
     # Demo Hashmap
     hashmap1 = HashMap()
