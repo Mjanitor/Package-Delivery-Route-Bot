@@ -76,16 +76,21 @@ def main():
         # Initial delivery
         distance = find_distance(get_address_index(truck.address), get_address_index(hashMap.get(str(truck.packages[0])).address))
         truck.mileage += float(distance)
+        truck.address = hashMap.get(str(truck.packages[0])).address
         undelivered.pop(0)
-        print(f"Truck Package Numbers: {undelivered}")
+        print(f"{truck.name} undelivered Package Numbers: {undelivered}")
 
-        for package in undelivered:
-            print(package)
+        while len(undelivered) > 0:
+            # TODO: Find shortest package distance
+            next_package = None
+            next_address = ""
+
             package_address = hashMap.get(str(package)).address
             distance = find_distance(get_address_index(truck.address), get_address_index(package_address))
             truck.mileage += float(distance)
             truck.address = package_address
             undelivered.pop(0)
+            print(f"{truck.name} undelivered Package Numbers: {undelivered}")
         # Accounting for the return home
         truck.mileage += float(find_distance(get_address_index(truck.address), get_address_index("4001 South 700 East")))
 
