@@ -1,3 +1,5 @@
+import datetime
+
 from truck import *
 from package import *
 from hashmap import *
@@ -70,7 +72,6 @@ def main():
         # Nearest Neighbor Algorithm
         mileage = truck.mileage
         undelivered = []
-        hashMap.print()
 
         for package in truck.packages:
             undelivered.append(package)
@@ -95,18 +96,14 @@ def main():
                     current_package = package
                     final_package_address = cur_package_address
 
+            # Updating tracking information
+
             mileage += float(distance)
-            #print(f"Final Package Number: {current_package}")
-            #print(f"Final Truck Address: {truck.address}")
             truck.address = final_package_address
-            #print(f"Final Package Address: {f_pnalPackage_address}")
-            #print(f"Current Mileage: {mileage}")
-            #print("------------------------------------")
             undelivered.pop(undelivered.index(current_package))
             distance = 1000
             temp_distance = None
             current_package = None
-            #print(f"{truck.name} undelivered Package Numbers: {undelivered}")
 
         truck.mileage = mileage
 
@@ -121,6 +118,7 @@ def main():
     third_trip = package_delivery(truck3)
 
     print(f"Total Miles: {first_trip + second_trip + third_trip}")
+    print(truck1.time)
 
 if __name__ == "__main__":
     main()
