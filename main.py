@@ -61,8 +61,8 @@ def main():
     hashMap = HashMap()
 
     # Creating Truck Objects
-    truck1 = Truck("Truck 1", 16, 18, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East", datetime.timedelta(hours=8))
-    truck2 = Truck("Truck 2", 16, 18, [3, 12, 17, 18, 19, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
+    truck1 = Truck("Truck 1", 16, 18, [1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East", datetime.timedelta(hours=8))
+    truck2 = Truck("Truck 2", 16, 18, [3, 12, 17, 18, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
     truck3 = Truck("Truck 3", 16, 18, [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
 
     load_packages(packageList, hashMap)
@@ -76,13 +76,18 @@ def main():
         for package in truck.packages:
             undelivered.append(package)
 
-        distance = 1000
         current_package = undelivered[0]
         cur_package_address = addressList[get_address_index(hashMap.get(str(current_package)).address)][2]
         final_package_address = None
+        distance = float(find_distance(get_address_index(truck.address), get_address_index(cur_package_address)))
 
         # Initial delivery
-        mileage += float(find_distance(get_address_index(truck.address), get_address_index(cur_package_address)))
+        print(current_package)
+        print(f"Starting time: {truck.time}")
+        truck.time += datetime.timedelta(hours=distance / 18)
+        hashMap.get(str(current_package)).delivery_time = truck.time
+        print(f"Delivery Time: {hashMap.get(str(current_package)).delivery_time}")
+        mileage += distance
         truck.address = cur_package_address
         undelivered.pop(undelivered.index(current_package))
 
@@ -97,7 +102,11 @@ def main():
                     final_package_address = cur_package_address
 
             # Updating tracking information
-
+            print(f"Package: {current_package}")
+            print(f"Starting time: {truck.time}")
+            truck.time += datetime.timedelta(hours=distance / 18)
+            hashMap.get(str(current_package)).delivery_time = truck.time
+            print(f"Delivery Time: {hashMap.get(str(current_package)).delivery_time}")
             mileage += float(distance)
             truck.address = final_package_address
             undelivered.pop(undelivered.index(current_package))
@@ -114,11 +123,12 @@ def main():
         return round(truck.mileage, 2)
 
     first_trip = package_delivery(truck1)
+    print("-------------------------------------------------")
     second_trip = package_delivery(truck2)
+    print("-------------------------------------------------")
     third_trip = package_delivery(truck3)
 
     print(f"Total Miles: {first_trip + second_trip + third_trip}")
-    print(truck1.time)
 
 if __name__ == "__main__":
     main()
