@@ -82,11 +82,8 @@ def main():
         distance = float(find_distance(get_address_index(truck.address), get_address_index(cur_package_address)))
 
         # Initial delivery
-        print(current_package)
-        print(f"Starting time: {truck.time}")
         truck.time += datetime.timedelta(hours=distance / 18)
         hashMap.get(str(current_package)).delivery_time = truck.time
-        print(f"Delivery Time: {hashMap.get(str(current_package)).delivery_time}")
         mileage += distance
         truck.address = cur_package_address
         undelivered.pop(undelivered.index(current_package))
@@ -102,16 +99,12 @@ def main():
                     final_package_address = cur_package_address
 
             # Updating tracking information
-            print(f"Package: {current_package}")
-            print(f"Starting time: {truck.time}")
             truck.time += datetime.timedelta(hours=distance / 18)
             hashMap.get(str(current_package)).delivery_time = truck.time
-            print(f"Delivery Time: {hashMap.get(str(current_package)).delivery_time}")
             mileage += float(distance)
             truck.address = final_package_address
             undelivered.pop(undelivered.index(current_package))
             distance = 1000
-            temp_distance = None
             current_package = None
 
         truck.mileage = mileage
@@ -123,12 +116,11 @@ def main():
         return round(truck.mileage, 2)
 
     first_trip = package_delivery(truck1)
-    print("-------------------------------------------------")
     second_trip = package_delivery(truck2)
-    print("-------------------------------------------------")
     third_trip = package_delivery(truck3)
 
     print(f"Total Miles: {first_trip + second_trip + third_trip}")
+
 
 if __name__ == "__main__":
     main()
