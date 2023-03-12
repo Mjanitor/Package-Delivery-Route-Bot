@@ -67,32 +67,51 @@ def main():
     # Main package delivery
     def package_delivery(truck):
         # Nearest Neighbor Algorithm
+        mileage = truck.mileage
         undelivered = []
-        distance = 0
+        hashMap.print()
 
         for package in truck.packages:
             undelivered.append(package)
 
+        distance = 1000
+        currentPackage = undelivered[0]
+        curPackageAddress = addressList[get_address_index(hashMap.get(str(currentPackage)).address)][2]
+        finalPackageAddress = None
+
         # Initial delivery
-        distance = find_distance(get_address_index(truck.address), get_address_index(hashMap.get(str(truck.packages[0])).address))
-        truck.mileage += float(distance)
-        truck.address = hashMap.get(str(truck.packages[0])).address
-        undelivered.pop(0)
-        print(f"{truck.name} undelivered Package Numbers: {undelivered}")
+        mileage += float(find_distance(get_address_index(truck.address), get_address_index(curPackageAddress)))
+        truck.address = curPackageAddress
+        undelivered.pop(undelivered.index(currentPackage))
 
+        # Find shortest package distance
         while len(undelivered) > 0:
-            # TODO: Find shortest package distance
-            next_package = None
-            next_address = ""
+            for package in undelivered:
+                curPackageAddress = addressList[get_address_index(hashMap.get(str(package)).address)][2]
+                tempDistance = float(find_distance(get_address_index(truck.address), get_address_index(curPackageAddress)))
+                if tempDistance < distance:
+                    distance = tempDistance
+                    currentPackage = package
+                    finalPackageAddress = curPackageAddress
 
-            package_address = hashMap.get(str(package)).address
-            distance = find_distance(get_address_index(truck.address), get_address_index(package_address))
-            truck.mileage += float(distance)
-            truck.address = package_address
-            undelivered.pop(0)
-            print(f"{truck.name} undelivered Package Numbers: {undelivered}")
-        # Accounting for the return home
-        truck.mileage += float(find_distance(get_address_index(truck.address), get_address_index("4001 South 700 East")))
+            mileage += float(distance)
+            #print(f"Final Package Number: {currentPackage}")
+            #print(f"Final Truck Address: {truck.address}")
+            truck.address = finalPackageAddress
+            #print(f"Final Package Address: {finalPackageAddress}")
+            #print(f"Current Mileage: {mileage}")
+            #print("------------------------------------")
+            undelivered.pop(undelivered.index(currentPackage))
+            distance = 1000
+            tempDistance = None
+            currentPackage = None
+            #print(f"{truck.name} undelivered Package Numbers: {undelivered}")
+
+        truck.mileage = mileage
+
+        # Accounting for first truck's return home
+        if truck == truck1:
+            truck.mileage += float(find_distance(get_address_index(truck.address), get_address_index("4001 South 700 East")))
 
         return round(truck.mileage, 2)
 
