@@ -73,6 +73,7 @@ def package_delivery(truck):
 
     for package in truck.packages:
         undelivered.append(package)
+        hashMap.get(str(package)).departure_time = truck.time
 
     current_package = undelivered[0]
     cur_package_address = addressList[get_address_index(hashMap.get(str(current_package)).address)][2]
@@ -86,7 +87,7 @@ def package_delivery(truck):
     truck.address = cur_package_address
     undelivered.pop(undelivered.index(current_package))
 
-    # Find shortest package distance
+    # Find the shortest package distance
     while len(undelivered) > 0:
         for package in undelivered:
             cur_package_address = addressList[get_address_index(hashMap.get(str(package)).address)][2]
@@ -120,7 +121,7 @@ third_trip = package_delivery(truck3)
 
 print(f"Total Miles: {first_trip + second_trip + third_trip}")
 
-def main():
+class Main:
     print("Welcome to the WGUPS Status Interface!")
     print("Here, you can check the status of any package at any time")
     time = input("Enter a time after 8AM (format: 08:00:00) to check the status of a package \n Type 'X' to exit. \n")
@@ -128,4 +129,15 @@ def main():
         exit()
     else:
         (h, m, s) = time.split(':')
-        lookup_time = datetime.timedelta(hours=h, minutes=m, seconds=s)
+        selection = input("Would you like all packages or just one?  If one, type 'solo': ")
+        if selection == "solo":
+            package_ID = input("Please enter the Package ID you would like to search: ")
+            lookup_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
+            lookup_package = hashMap.get(str(package_ID))
+            lookup_package.update_delivery_status(lookup_time)
+            print(f"Departure Time: {lookup_package.departure_time}")
+            print(f"Delivery Time: {lookup_package.delivery_time}")
+            print(f"Package ID: {package_ID}, Status: {lookup_package.status}")
+        else:
+            #TODO: Implement all package statuses
+            pass
