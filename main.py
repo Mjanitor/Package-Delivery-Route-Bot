@@ -76,36 +76,36 @@ def main():
             undelivered.append(package)
 
         distance = 1000
-        currentPackage = undelivered[0]
-        curPackageAddress = addressList[get_address_index(hashMap.get(str(currentPackage)).address)][2]
-        finalPackageAddress = None
+        current_package = undelivered[0]
+        cur_package_address = addressList[get_address_index(hashMap.get(str(current_package)).address)][2]
+        final_package_address = None
 
         # Initial delivery
-        mileage += float(find_distance(get_address_index(truck.address), get_address_index(curPackageAddress)))
-        truck.address = curPackageAddress
-        undelivered.pop(undelivered.index(currentPackage))
+        mileage += float(find_distance(get_address_index(truck.address), get_address_index(cur_package_address)))
+        truck.address = cur_package_address
+        undelivered.pop(undelivered.index(current_package))
 
         # Find shortest package distance
         while len(undelivered) > 0:
             for package in undelivered:
-                curPackageAddress = addressList[get_address_index(hashMap.get(str(package)).address)][2]
-                tempDistance = float(find_distance(get_address_index(truck.address), get_address_index(curPackageAddress)))
-                if tempDistance < distance:
-                    distance = tempDistance
-                    currentPackage = package
-                    finalPackageAddress = curPackageAddress
+                cur_package_address = addressList[get_address_index(hashMap.get(str(package)).address)][2]
+                temp_distance = float(find_distance(get_address_index(truck.address), get_address_index(cur_package_address)))
+                if temp_distance < distance:
+                    distance = temp_distance
+                    current_package = package
+                    final_package_address = cur_package_address
 
             mileage += float(distance)
-            #print(f"Final Package Number: {currentPackage}")
+            #print(f"Final Package Number: {current_package}")
             #print(f"Final Truck Address: {truck.address}")
-            truck.address = finalPackageAddress
-            #print(f"Final Package Address: {finalPackageAddress}")
+            truck.address = final_package_address
+            #print(f"Final Package Address: {f_pnalPackage_address}")
             #print(f"Current Mileage: {mileage}")
             #print("------------------------------------")
-            undelivered.pop(undelivered.index(currentPackage))
+            undelivered.pop(undelivered.index(current_package))
             distance = 1000
-            tempDistance = None
-            currentPackage = None
+            temp_distance = None
+            current_package = None
             #print(f"{truck.name} undelivered Package Numbers: {undelivered}")
 
         truck.mileage = mileage
@@ -116,11 +116,11 @@ def main():
 
         return round(truck.mileage, 2)
 
-    firstTrip = package_delivery(truck1)
-    secondTrip = package_delivery(truck2)
-    thirdTrip = package_delivery(truck3)
+    first_trip = package_delivery(truck1)
+    second_trip = package_delivery(truck2)
+    third_trip = package_delivery(truck3)
 
-    print(f"Total Miles: {firstTrip + secondTrip + thirdTrip}")
+    print(f"Total Miles: {first_trip + second_trip + third_trip}")
 
 if __name__ == "__main__":
     main()
