@@ -2,6 +2,7 @@ from truck import *
 from package import *
 from hashmap import *
 import csv
+import datetime
 
 def main():
 
@@ -58,9 +59,9 @@ def main():
     hashMap = HashMap()
 
     # Creating Truck Objects
-    truck1 = Truck("Truck 1", 16, 18, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East")
-    truck2 = Truck("Truck 2", 16, 18, [3, 12, 17, 18, 19, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 0.0, "4001 South 700 East")
-    truck3 = Truck("Truck 3", 16, 18, [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 0.0, "4001 South 700 East")
+    truck1 = Truck("Truck 1", 16, 18, [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40], 0.0, "4001 South 700 East", datetime.timedelta(hours=8))
+    truck2 = Truck("Truck 2", 16, 18, [3, 12, 17, 18, 19, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 0.0, "4001 South 700 East", datetime.timedelta(hours=10, minutes=20))
+    truck3 = Truck("Truck 3", 16, 18, [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 0.0, "4001 South 700 East", datetime.timedelta(hours=9, minutes=5))
 
     load_packages(packageList, hashMap)
 
