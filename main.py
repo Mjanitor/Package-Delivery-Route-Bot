@@ -1,5 +1,3 @@
-import datetime
-
 from truck import *
 from package import *
 from hashmap import *
