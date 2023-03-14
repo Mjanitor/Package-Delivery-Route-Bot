@@ -23,6 +23,7 @@ with open("Resources/Address Indices.csv", encoding='utf-8-sig') as csvfile:
 
 # Reading CSV files to create packages with data, then adding them to the Hash Map
 def load_packages(file_name, hash_table):
+    # Adding package data based on columns in the CSV List
     for package in file_name:
         ID = package[0]
         address = package[1]
@@ -124,20 +125,22 @@ print(f"Total Miles: {first_trip + second_trip + third_trip}")
 class Main:
     print("Welcome to the WGUPS Status Interface!")
     print("Here, you can check the status of any package at any time")
-    time = input("Enter a time after 8AM (format: 08:00:00) to check the status of a package \n Type 'X' to exit. \n")
+    time = input("Enter a time after 8AM (format: 0930) to check the status of a package \n Type 'X' to exit. \n")
     if time.lower() == "x":
         exit()
     else:
-        (h, m, s) = time.split(':')
+        h = time[:2]
+        m = time[2:]
+        lookup_time = datetime.timedelta(hours=int(h), minutes=int(m))
         selection = input("Would you like all packages or just one?  If one, type 'solo': ")
         if selection == "solo":
             package_ID = input("Please enter the Package ID you would like to search: ")
-            lookup_time = datetime.timedelta(hours=int(h), minutes=int(m), seconds=int(s))
             lookup_package = hashMap.get(str(package_ID))
             lookup_package.update_delivery_status(lookup_time)
-            print(f"Departure Time: {lookup_package.departure_time}")
-            print(f"Delivery Time: {lookup_package.delivery_time}")
-            print(f"Package ID: {package_ID}, Status: {lookup_package.status}")
+            print(f"Package ID: {package_ID}, Status: {lookup_package.status}, Departure Time: {lookup_package.departure_time}, Delivery Time: {lookup_package.delivery_time}")
         else:
-            #TODO: Implement all package statuses
-            pass
+            # Implement all package statuses
+            for package in range(1, 41):
+                package = hashMap.get(str(package))
+                package.update_delivery_status(lookup_time)
+                print(f"Package ID: {package.id}, Status: {package.status}, Departure Time: {package.departure_time}, Delivery Time: {package.delivery_time}")
