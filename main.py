@@ -1,3 +1,5 @@
+# Identifying comment: Michael Janitor, ID # 010769292
+
 from truck import *
 from package import *
 from hashmap import *
@@ -83,6 +85,7 @@ def package_delivery(truck):
         undelivered.append(package)
         hashMap.get(str(package)).departure_time = truck.time  # Capturing the packages' departure time to match truck's
 
+    # Capturing addresses and distance between truck and initial package
     current_package = undelivered[0]
     cur_package_address = addressList[get_address_index(hashMap.get(str(current_package)).address)][2]
     final_package_address = None
