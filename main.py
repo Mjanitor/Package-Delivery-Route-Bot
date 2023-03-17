@@ -144,36 +144,36 @@ class Main:
         print("------------------------------------------------------")
         print("Welcome to the WGUPS Status Interface!")
         print("Here, you can check the status of any package at any time")
-        time = input("Enter a time after 8AM (format: 0930) to check the status of a package. \n Type 'X' to exit: ")
+        time = ""
         # Validating input
-        while time.isnumeric() == False or len(time) != 4:
-            time = input("Please check your formatting and try again. \n Enter a time after 8AM (format: 0930) to check the status of a package. \n Type 'X' to exit: ")
+        while True:
+            time = input("Enter a time after 8AM (format: 0930) to check the status of a package. \n Type 'X' to exit: ")
             if time.lower() == "x":
                 exit()
-        # Accounting for case
-        if time.lower() == "x":
-            exit()
-        else:
-            h = time[:2]  # First two characters
-            m = time[2:]  # Second two characters
-            lookup_time = datetime.timedelta(hours=int(h), minutes=int(m))
-            selection = input("Would you like all packages or just one?  If one, type 'solo': ")
-            # Individual lookup
-            if selection == "solo":
-                package_ID = int(input("Packages range from 1 - 40.  Please enter the Package ID you would like to search: "))
-                while package_ID < 1 or package_ID > 40:
-                    package_ID = int(input("Invalid Package number.  Please enter a number between 1 and 40: "))
-                lookup_package = hashMap.get(str(package_ID))
-                lookup_package.update_delivery_status(lookup_time)
-                print("------------------------------------------------------")
-                print(f"Status at: {lookup_time}\nPackage ID: {package_ID}, Status: [{lookup_package.status}], Departure Time: {lookup_package.departure_time}, Delivery Time: {lookup_package.delivery_time} \n")
-            # All Packages lookup
+            elif time.isnumeric() == False or len(time) != 4:
+                print("Please check your formatting and try again.")
+                continue
             else:
-                # Implement all package statuses
-                for package in range(1, 41):
-                    package = hashMap.get(str(package))
-                    package.update_delivery_status(lookup_time)
+                h = time[:2]  # First two characters
+                m = time[2:]  # Second two characters
+                lookup_time = datetime.timedelta(hours=int(h), minutes=int(m))
+                selection = input("Would you like all packages or just one?  If one, type 'solo': ")
+                # Individual lookup
+                if selection == "solo":
+                    package_ID = int(input("Packages range from 1 - 40.  Please enter the Package ID you would like to search: "))
+                    while package_ID < 1 or package_ID > 40:
+                        package_ID = int(input("Invalid Package number.  Please enter a number between 1 and 40: "))
+                    lookup_package = hashMap.get(str(package_ID))
+                    lookup_package.update_delivery_status(lookup_time)
                     print("------------------------------------------------------")
-                    print(f"Status at: {lookup_time}\nPackage ID: {package.id}, Status: [{package.status}], Departure Time: {package.departure_time}, Delivery Time: {package.delivery_time} \n")
-                print("------------------------------------------------------\n")
-                print(f"Total Miles: {first_trip + second_trip + third_trip} \n")
+                    print(f"Status at: {lookup_time}\nPackage ID: {package_ID}, Status: [{lookup_package.status}], Departure Time: {lookup_package.departure_time}, Delivery Time: {lookup_package.delivery_time} \n")
+                # All Packages lookup
+                else:
+                    # Implement all package statuses
+                    for package in range(1, 41):
+                        package = hashMap.get(str(package))
+                        package.update_delivery_status(lookup_time)
+                        print("------------------------------------------------------")
+                        print(f"Status at: {lookup_time}\nPackage ID: {package.id}, Status: [{package.status}], Departure Time: {package.departure_time}, Delivery Time: {package.delivery_time} \n")
+                    print("------------------------------------------------------\n")
+                    print(f"Total Miles: {first_trip + second_trip + third_trip} \n")
