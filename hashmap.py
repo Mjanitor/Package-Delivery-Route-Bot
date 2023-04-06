@@ -1,59 +1,54 @@
-# Hash Map
-# Large credit goes to the outline shown in https://www.youtube.com/watch?v=9HFbhPscPU0
+# HashMap Creating Class
+# Referenced the "Let's Go Hashing" video/PDF in the supplemental resources
+
 class HashMap:
-    def __init__(self):
-        self.size = 64
-        self.map = [None] * self.size
+    # Make a bunch of lists (buckets) so that we can avoid collisions
+    def __init__(self, objects = 40):
+        self.table = []
+        for i in range(objects):
+            self.table.append([])
 
-    # Iterates over characters in the key value and hashes based on the order
-    def get_hash(self, key):
-        hash = 0
-        for char in str(key):
-            hash += ord(char)
-        return hash % self.size
+    def __str__(self):
+        return str(f"{self.table}")
 
-    # Adds a key-value pair to the hash table after hashing the key
-    def add(self, key, value):
-        key_hash = self.get_hash(key)
-        key_value = [key, value]
+    # Inserting items
+    def insert(self, key, item):
+        hash_value = hash(key) % len(self.table)
+        #print(f"Key: {key}, Insert Value: {hash_value}")
+        bucket_items = self.table[hash_value]
 
-        if self.map[key_hash] is None:
-            self.map[key_hash] = list([key_value])
-            return True
-        else:
-            for pair in self.map[key_hash]:
-                if pair[0] == key:
-                    pair[1] = value
-                    return True
-            self.map[key_hash].append(key_value)
-            return True
-
-    # Returns a given hash table item based upon the given key (ID)
-    def get(self, key):
-        key_hash = self.get_hash(key)
-        if self.map[key_hash] is not None:
-            for pair in self.map[key_hash]:
-                if pair[0] == key:
-                    return pair[1]
-        return None
-
-    # Removes a key value pair from the hash table
-    def delete(self, key):
-        key_hash = self.get_hash(key)
-
-        if self.map[key_hash] is None:
-            return False
-        for i in range(0, len(self.map[key_hash])):
-            if self.map[key_hash][i][0] == key:
-                self.map[key_hash].pop(i)
+        # If exists, update
+        for pair in bucket_items:
+            if pair[0] == key:
+                pair[1] = item
                 return True
 
-    # Prints a string version of the hash table
-    def print(self):
-        print("----Hashmap----")
-        for item in self.map:
-            if item is not None:
-                print(str(item))
+        # If not, add
+        bucket_items.append([key, item])
 
+    # Returning Package Object
+    def lookup(self, id):
+        hash_value = hash(id) % len(self.table)
+        #print(f"Lookup Value: {hash_value}")
+        bucket_items = self.table[hash_value]
+        #print(bucket_items)
 
+        for kv in bucket_items:
+            #print(f"KV: {kv}")
+            if kv[0] == id:
+                #print(f"Table: {bucket_items}")
+                #print(f"Package: {kv[1]}")
+                return kv[1]
+        else:
+            return f"Lookup term {id} not found"
 
+    # Removing items
+    def remove(self, key):
+        hash_value = hash(key) % len(self.table)
+        bucket_items = self.table[hash_value]
+
+        for kv in bucket_items:
+            if kv[0] == key:
+                bucket_items.remove([kv[0], kv[1]])
+        else:
+            return f"Lookup term {key} not found"
