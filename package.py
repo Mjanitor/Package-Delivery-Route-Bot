@@ -1,27 +1,24 @@
 # Package Class
+
 class Package:
-    def __init__(self, id, address, deadline, city, state, zip, weight, status):
+    def __init__(self, id, delivery_address, delivery_city, delivery_zip, delivery_deadline, weight, departure_time, arrival_time):
         self.id = id
-        self.address = address
-        self.deadline = deadline
-        self.city = city
-        self.state = state
-        self.zip = zip
+        self.delivery_address = delivery_address
+        self.delivery_city = delivery_city
+        self.delivery_zip = delivery_zip
+        self.delivery_deadline = delivery_deadline
         self.weight = weight
-        self.status = status
-        self.departure_time = None
-        self.delivery_time = None
+        self.departure_time = departure_time
+        self.arrival_time = arrival_time
 
-    # Basic print statement for all relevant info
     def __str__(self):
-        return f"This package has an ID of {self.id} and is currently {self.status}.  It is being delivered to {self.address}, {self.city}, {self.state} {self.zip}.  It weighs {self.weight} Kilos " \
-               f"and must be delivered by {self.deadline}."
+        print(self.id)
 
-    # Updates the delivery status attribute based on the input lookup time
-    def update_delivery_status(self, lookup_time):
-        if self.delivery_time < lookup_time:
-            self.status = "Delivered"
-        elif self.departure_time > lookup_time:
-            self.status = "At Hub"
+    # Updating Package Status
+    def getStatus(self, input_time):
+        if self.arrival_time  <= input_time:
+            return "Delivered"
+        if self.arrival_time > input_time >= self.departure_time:
+            return "En Route"
         else:
-            self.status = "En Route"
+            return "At Hub"
