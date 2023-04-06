@@ -1,14 +1,11 @@
-# Truck class
+# Truck Class
 class Truck:
-    def __init__(self, name, limit, speed, packages, mileage, address, time):
+    def __init__(self, name, mileage, packages, location, time):
         self.name = name
-        self.limit = limit
-        self.speed = speed
-        self.packages = packages
         self.mileage = mileage
-        self.address = address
+        self.packages = packages
+        self.location = location
         self.time = time
 
-    # Returns how many packages are loaded in the truck
     def __str__(self):
-        return f"This truck has {self.packages} packages."
+        return f"{self.name} and {self.packages}"
