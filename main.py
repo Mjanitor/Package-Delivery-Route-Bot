@@ -1,4 +1,4 @@
-# Written by Mike Janitor, Student ID: 010769292
+# Written by Mike Janitor
 
 import Truck
 from Package import *
